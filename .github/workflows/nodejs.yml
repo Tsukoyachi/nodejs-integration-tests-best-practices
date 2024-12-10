@@ -37,3 +37,21 @@ jobs:
       - run: npm test
       - run: npm run test:nestjs
       - run: npm run test:mocha
+
+  general-test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm test
+
+  nestjs-test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm run test:nestjs
+
+  mocha-test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm run test:mocha
