@@ -5,6 +5,7 @@ on:
     workflows: ['Node.js CI Setup']
     branches:
       - develop
+      - master
     types:
       - completed
 
