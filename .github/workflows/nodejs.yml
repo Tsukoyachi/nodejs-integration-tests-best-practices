@@ -21,10 +21,19 @@ jobs:
         run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
         id: nvm
 
-      - name: Install docker-compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
+      - name: Use Node.js (.nvmrc)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+          cache: 'npm'
+
+      - run: npm i
+
+  general-test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Use Node.js (.nvmrc)
         uses: actions/setup-node@v4
@@ -34,24 +43,21 @@ jobs:
 
       - run: npm i
 
-      - name: Create artifact
-        uses: actions/upload-artifact@v4
-
-  general-test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Fetch Artifact
-        uses: actions/download-artifact@v4
-
       - run: npm test
 
   nestjs-test:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch Artifact
-        uses: actions/download-artifact@v4
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js (.nvmrc)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+          cache: 'npm'
+
+      - run: npm i
 
       - run: npm run test:nestjs
 
@@ -59,7 +65,14 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch Artifact
-        uses: actions/download-artifact@v4
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js (.nvmrc)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+          cache: 'npm'
+
+      - run: npm i
 
       - run: npm run test:mocha
