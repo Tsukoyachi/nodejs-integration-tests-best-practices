@@ -2,7 +2,7 @@ name: Integration Test CI
 
 on:
   workflow_run:
-    workflows: ['build']
+    workflows: ['Node.js CI Setup']
     branches: [master]
     types:
       - completed
