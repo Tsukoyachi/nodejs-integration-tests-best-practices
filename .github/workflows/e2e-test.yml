@@ -1,11 +1,13 @@
-name: Unit Test CI
+name: E2E Test CI
 
 on:
   workflow_run:
     workflows: ['Node.js CI Setup']
-    branches: [master]
     types:
       - completed
+  pull_request:
+    branches:
+      - master
 
 jobs:
   mocha-test:
