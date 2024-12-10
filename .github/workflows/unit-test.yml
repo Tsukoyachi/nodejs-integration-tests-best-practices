@@ -5,6 +5,7 @@ on:
     workflows: ['Node.js CI Setup']
     types:
       - completed
+  
 
 jobs:
   general-test:
