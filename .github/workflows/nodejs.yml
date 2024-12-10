@@ -32,26 +32,34 @@ jobs:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
           cache: 'npm'
 
-      - run: npm ci
+      - run: npm i
 
-      - run: npm test
-      - run: npm run test:nestjs
-      - run: npm run test:mocha
+      - name: Create artifact
+        uses: actions/upload-artifact@v4
 
   general-test:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Fetch Artifact
+        uses: actions/download-artifact@v4
+
       - run: npm test
 
   nestjs-test:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Fetch Artifact
+        uses: actions/download-artifact@v4
+
       - run: npm run test:nestjs
 
   mocha-test:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Fetch Artifact
+        uses: actions/download-artifact@v4
+
       - run: npm run test:mocha
